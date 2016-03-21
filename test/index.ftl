@@ -35,8 +35,6 @@
     <script> 
         var a = ${JSON.stringify(a)};
         var b = ${JSON.stringify(b)};
-        var c = ${JSON.stringify(c)};
-        var d = ${JSON.stringify(d)};
         var str_a = "${JSON.stringify(a)?js_string}";
 
         console.assert(a["\"'\\"][1].c.xxx, "${a["\"\'\\"][1].c.xxx?js_string}");   //"   
