@@ -1,0 +1,18 @@
+{
+  "name": "ftl-json",
+  "version": "1.0.0",
+  "description": "A JSON Encoder for Freemarker",
+  "main": "index.ftl",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"try to render the ftl in test\/index.ftl \" && exit 1"
+  },
+  "keywords": [
+    "ftl",
+    "json"
+  ],
+  "author": "liuxiaole@corp.netease.com",
+  "license": "MIT"
+}

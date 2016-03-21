@@ -1,0 +1,26 @@
+{
+  "name": "ftl-json",
+  "authors": [
+    "liuxiaole <liuxiaole_abc@163.com>"
+  ],
+  "description": "A JSON Encoder implemented by freemarker.",
+  "main": "index.ftl",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "ftl",
+    "json"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "./npm-debug.log",
+    "./run.config.js",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
