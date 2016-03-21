@@ -30,6 +30,7 @@ var jsonString = "${JSON.stringify(data)?js_string}"; //输出到js字符串
 
 # Notice
 
+
 由于在 freemarker 中无法正常处理 `null` 值，因此传递不存在的值将得到一个空对象，即 `{}`。而 map 或 list 中不存在的 value 或 item 会处理为 `null`。
 ```freemarker
 ${(JSON.stringify() == '{}') ? string('true', 'false')}  <#-- true -->
@@ -42,5 +43,13 @@ ${JSON.stringify(data, 30)}
 ${JSON.stringify(data, 0)}
 ```
 
-即使在限制引用深度为20的情况下，如果出现恶劣的循环引用的数据结构，仍会导致数据溢出。**请严格保证传递的数据不出现循环引用。**
+即使在限制引用深度为20的情况下，如果出现恶劣的循环引用的数据结构，仍会导致数据溢出。
+
+**请严格保证传递的数据不出现循环引用。**
+
+**请严格保证传递的数据不出现循环引用。**
+
+**请严格保证传递的数据不出现循环引用。**
+
+该模块仅供 ftl 中转化简单的数据对象，例如将简单的配置数据传递到 js 中。如果遇到数据量大的场景，请直接让后台童鞋传递 json 字符串。没有做过benchmark，但 ftl 中的对象都是包装过的 java 对象（wrapped object），理论上这个 ftl 版的实现必然要比 java 中直接实现效率低。
 

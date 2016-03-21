@@ -16,8 +16,8 @@
   "homepage": "",
   "ignore": [
     "**/.*",
-    "./npm-debug.log",
-    "./run.config.js",
+    "npm-debug.log",
+    "run.config.js",
     "node_modules",
     "bower_components",
     "test",
