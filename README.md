@@ -3,7 +3,9 @@ JSON Stringify in FreeMarker
 
 # Intro
 
-JSON.stringify 的 freemarker 版本实现, 支持 `hash(hash_ex)` `sequence(collection、enumerable, indexable)` `string` `number` `date` `boolean` 类型的值转化为 JSON 字符串格式。
+JSON.stringify 的 FreeMarker 版本实现, 支持 `hash(hash_ex)` `sequence(collection、enumerable, indexable)` `string` `number` `date` `boolean` 类型的值转化为 JSON 字符串格式。
+
+支持 FreeMarker 2.3.21+. 
 
 # How-to-use
 
@@ -53,3 +55,7 @@ ${JSON.stringify(data, 0)}
 
 该模块仅供 ftl 中转化简单的数据对象，例如将简单的配置数据传递到 js 中。如果遇到数据量大的场景，请直接让后台童鞋传递 json 字符串。没有做过benchmark，但 ftl 中的对象都是包装过的 java 对象（wrapped object），理论上这个 ftl 版的实现必然要比 java 中直接实现效率低。
 
+
+# Testing
+
+安装jdk，然后将javac、java的路径添加到path中，然后执行 `npm test`。

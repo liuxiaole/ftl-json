@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"try to render the ftl in test\/index.ftl \" && exit 1"
+    "test": "node test/test.js"
   },
   "keywords": [
     "ftl",
