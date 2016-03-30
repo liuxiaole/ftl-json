@@ -25,15 +25,15 @@
             </#list>
             <#list keys as key>
                 <#if !object[key]??>
-                    <#local jsonStr = jsonStr + '"${key?json_string}":' + 'null' + key_has_next?string(',','') />
+                    <#local jsonStr = jsonStr + '"' + key?json_string + '":' + 'null' + key_has_next?string(',','') />
                 <#else>
-                    <#local jsonStr = jsonStr + '"${key?json_string}":' + _encode(object[key], depth+1, maxDepth) + key_has_next?string(',','') />
+                    <#local jsonStr = jsonStr + '"' + key?json_string + '":' + _encode(object[key], depth+1, maxDepth) + key_has_next?string(',','') />
                 </#if>
             </#list>
             <#local jsonStr = jsonStr + '}' />
 
         <#else>
-            <#local jsonStr = '"${object?json_string}"' />
+            <#local jsonStr = '"' + object?json_string + '"' />
         </#if>
 
 
@@ -50,7 +50,7 @@
     
     <#-- date -->
     <#elseif object?is_date_like>
-        <#local jsonStr = '"${object?datetime?iso_utc_ms}"' />
+        <#local jsonStr = '"' + object?datetime?iso_utc_ms + '"' />
 
     <#-- macro -->
     <#elseif object?is_macro>
@@ -64,15 +64,15 @@
     <#elseif object?is_directive>
         <#local jsonStr = '"[[DIRECTIVE]]"' />
 
-    <#-- unknown -->
+    <#-- hash -->
     <#elseif object?is_hash || object?is_hash_ex>
         <#local jsonStr = jsonStr + '{' />
         
         <#list object?keys as key>
             <#if !object[key]??>
-                <#local jsonStr = jsonStr + '"${key?json_string}":' + 'null' + key_has_next?string(',','') />
+                <#local jsonStr = jsonStr + '"' + key?json_string + '":' + 'null' + key_has_next?string(',','') />
             <#else>
-                <#local jsonStr = jsonStr + '"${key?json_string}":' + _encode(object[key], depth+1, maxDepth) + key_has_next?string(',','') />
+                <#local jsonStr = jsonStr + '"' + key?json_string + '":' + _encode(object[key], depth+1, maxDepth) + key_has_next?string(',','') />
             </#if>
         </#list>
 
@@ -85,7 +85,7 @@
             <#if !item??>
                 <#local jsonStr = jsonStr + 'null' + item_has_next?string(',','') />
             <#else>
-                <#local jsonStr = jsonStr + _encode(item!{}, depth+1, maxDepth) + item_has_next?string(',','') />
+                <#local jsonStr = jsonStr + _encode(item, depth+1, maxDepth) + item_has_next?string(',','') />
             </#if>
         </#list>
         <#local jsonStr = jsonStr + ']' />
