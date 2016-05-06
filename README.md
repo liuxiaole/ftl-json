@@ -33,10 +33,15 @@ var jsonString = "${JSON.stringify(data)?js_string}"; //输出到js字符串
 # Notice
 
 
-由于在 freemarker 中无法正常处理 `null` 值，因此传递不存在的值将得到一个空对象，即 `{}`。而 map 或 list 中不存在的 value 或 item 会处理为 `null`。
+~~由于在 freemarker 中无法正常处理 `null` 值，因此传递不存在的值将得到一个空对象，即 `{}`。而 map 或 list 中不存在的 value 或 item 会处理为 `null`。~~
+
+由于在 freemarker 中无法正常处理 `null` 值，因此传递不存在的值将得到一个默认对象 `{"__KEY_REPRESENT_FOR_NULL__": true}`, 以便在处理时方便识别出 null 值，这样副作用相对较小。因此请避开这个key，否则你的对象会被识别为 `null` 值。
+
+
 ```freemarker
-${(JSON.stringify() == '{}') ? string('true', 'false')}  <#-- true -->
+${(JSON.stringify() == 'null') ? string('true', 'false')}  <#-- true -->
 ```
+
 
 **由于在 freemarker 中无法比较两个对象是否是相同的引用，因此无法检查数据中是否出现循环引用。目前使用限制数据引用深度的方式防止出现死循环，默认深度为20，可通过第二个参数来覆盖默认的深度，传递 0 则表示不限制数据深度。**
 

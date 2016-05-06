@@ -1,0 +1,40 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Press F12  to see the Console and Source Code</h1>
+    <div data-options="{&quot;d&quot;:[null,&quot;xxx&quot;,&quot;&quot;],&quot;e&quot;:{&quot;\t\u0000\n\r&#39;\&quot;b&quot;:[null,&quot;xxx&quot;,&quot;&quot;],&quot;prop&quot;:null},&quot;f&quot;:null,&quot;g&quot;:[{&quot;birthday&quot;:&quot;2016-03-29T11:39:53.605Z&quot;,&quot;name&quot;:&quot;Hanmeimei&quot;,&quot;xxx&quot;:null},{&quot;birthday&quot;:&quot;2016-03-29T11:39:53.605Z&quot;,&quot;name&quot;:&quot;Lilei&quot;,&quot;xxx&quot;:null},false,-1,12.003,179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,null,&quot;A&quot;,null,[null,&quot;xxx&quot;,&quot;&quot;],&quot;java.lang.Error: whatever, you&#39;re wrong!&quot;]}" id="test"></div>
+    <div data-options="{&quot;a&quot;:1,&quot;b\nc&quot;:true,&quot;c.d&quot;:&quot;2016-05-06T01:51:59.724Z&quot;,&quot;\&quot;&#39;\\&quot;:[{&quot;a&quot;:1,&quot;b&quot;:2},{&quot;c&quot;:{&quot;xxx&quot;:&quot;&lt;a href=\&quot;http://www.163.com.com\&quot; &gt;163&lt;\/a&gt;&quot;}}]}" id="test2"></div>
+
+    <script>
+    var a = {"d":[null,"xxx",""],"e":{"\t\u0000\n\r'\"b":[null,"xxx",""],"prop":null},"f":null,"g":[{"birthday":"2016-03-29T11:39:53.605Z","name":"Hanmeimei","xxx":null},{"birthday":"2016-03-29T11:39:53.605Z","name":"Lilei","xxx":null},false,-1,12.003,179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,null,"A",null,[null,"xxx",""],"java.lang.Error: whatever, you're wrong!"]};
+    var str_a = "{\"d\":[null,\"xxx\",\"\"],\"e\":{\"\\t\\u0000\\n\\r\'\\\"b\":[null,\"xxx\",\"\"],\"prop\":null},\"f\":null,\"g\":[{\"birthday\":\"2016-03-29T11:39:53.605Z\",\"name\":\"Hanmeimei\",\"xxx\":null},{\"birthday\":\"2016-03-29T11:39:53.605Z\",\"name\":\"Lilei\",\"xxx\":null},false,-1,12.003,179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,null,\"A\",null,[null,\"xxx\",\"\"],\"java.lang.Error: whatever, you\'re wrong!\"]}";
+
+    console.assert(a.g[5],Number.MAX_VALUE); // max value of double 
+    console.assert(JSON.stringify(a) , JSON.stringify(JSON.parse(document.querySelector('#test').getAttribute('data-options'))) ); //html tag attribute
+    console.assert(Date.parse(a.g[0].birthday) , 1459251593605); // java.util.date
+    console.assert(a.g[0].age === undefined); // java public field not exposed , only remains getter and setter data fields
+    console.assert(a.g[0].speak === undefined); // java public method not exposed
+
+    ///////////////////////////////////////////
+    // ftl assigned data test
+    //////////////////////////////////////////
+
+    var b = {"a":1,"b\nc":true,"c.d":"2016-05-06T01:51:59.724Z","\"'\\":[{"a":1,"b":2},{"c":{"xxx":"<a href=\"http://www.163.com.com\" >163<\/a>"}}]};
+    var str_b = "{\"a\":1,\"b\\nc\":true,\"c.d\":\"2016-05-06T01:51:59.724Z\",\"\\\"\'\\\\\":[{\"a\":1,\"b\":2},{\"c\":{\"xxx\":\"<a href=\\\"http://www.163.com.com\\\" >163<\\/a>\"}}]}";
+
+    console.assert(b["\"'\\"][1].c.xxx, "<a href=\"http://www.163.com.com\" >163<\/a>");   //"
+    console.assert(b["b\nc"]);
+    console.assert(Date.parse(b["c.d"]) , 1462499519724);
+    console.assert(JSON.stringify(b), JSON.stringify(JSON.parse(str_b)));
+    console.assert(JSON.stringify(b) , JSON.stringify(JSON.parse(document.querySelector('#test2').getAttribute('data-options'))) );
+    console.assert("null" , "null");  
+    </script>
+</body>
+</html>
+

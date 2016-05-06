@@ -1,8 +1,9 @@
-<#function stringify object={} maxDepth=20>
+<#function stringify object={"__KEY_REPRESENT_FOR_NULL__": true} maxDepth=20>
     <#return _encode(object, 0, maxDepth) />
 </#function>
 
-<#function _encode object depth maxDepth>
+<#function _encode object={"__KEY_REPRESENT_FOR_NULL__": true} depth=0 maxDepth=20>
+
     <#if maxDepth gt 0 && depth gt maxDepth>
         <#local object = '[[refering path depth exceeded]]' />
     </#if>
@@ -24,11 +25,7 @@
                 </#if>
             </#list>
             <#list keys as key>
-                <#if !object[key]??>
-                    <#local jsonStr = jsonStr + '"' + key?json_string + '":' + 'null' + key_has_next?string(',','') />
-                <#else>
-                    <#local jsonStr = jsonStr + '"' + key?json_string + '":' + _encode(object[key], depth+1, maxDepth) + key_has_next?string(',','') />
-                </#if>
+                <#local jsonStr = jsonStr + '"' + key?json_string + '":' + _encode(object[key], depth+1, maxDepth) + key_has_next?string(',','') />
             </#list>
             <#local jsonStr = jsonStr + '}' />
 
@@ -66,27 +63,24 @@
 
     <#-- hash -->
     <#elseif object?is_hash || object?is_hash_ex>
-        <#local jsonStr = jsonStr + '{' />
-        
-        <#list object?keys as key>
-            <#if !object[key]??>
-                <#local jsonStr = jsonStr + '"' + key?json_string + '":' + 'null' + key_has_next?string(',','') />
-            <#else>
-                <#local jsonStr = jsonStr + '"' + key?json_string + '":' + _encode(object[key], depth+1, maxDepth) + key_has_next?string(',','') />
-            </#if>
-        </#list>
+        <#if object.__KEY_REPRESENT_FOR_NULL__??>
+            <#local jsonStr = 'null' />
+        <#else>
 
-        <#local jsonStr = jsonStr + '}' />
+            <#local jsonStr = jsonStr + '{' />
+
+            <#list object?keys as key>
+                <#local jsonStr = jsonStr + '"' + key?json_string + '":' + _encode(object[key], depth+1, maxDepth) + key_has_next?string(',','') />
+            </#list>
+
+            <#local jsonStr = jsonStr + '}' />
+        </#if>
     
     <#-- sequence -->
     <#elseif object?is_sequence || object?is_collection || object?is_enumerable || object?is_indexable>
         <#local jsonStr = jsonStr + '[' />
         <#list object as item>
-            <#if !item??>
-                <#local jsonStr = jsonStr + 'null' + item_has_next?string(',','') />
-            <#else>
-                <#local jsonStr = jsonStr + _encode(item, depth+1, maxDepth) + item_has_next?string(',','') />
-            </#if>
+            <#local jsonStr = jsonStr + _encode(item, depth+1, maxDepth) + item_has_next?string(',','') />
         </#list>
         <#local jsonStr = jsonStr + ']' />
     

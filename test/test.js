@@ -3,7 +3,7 @@ var spawn = require('child_process').spawn;
 
 var run;
 
-if(os.platform().indexOf('win') !== -1) {
+if(os.platform().indexOf('win32') !== -1) {
     run = spawn("cmd",["/c",".\\test\\test.bat"]);
 } else {
     run = spawn("sh",["./test/test.sh"]);

@@ -52,7 +52,7 @@
     console.assert(Date.parse(b["c.d"]) , ${time?long?c});
     console.assert(JSON.stringify(b), JSON.stringify(JSON.parse(str_b)));
     console.assert(JSON.stringify(b) , JSON.stringify(JSON.parse(document.querySelector('#test2').getAttribute('data-options'))) );
-    console.assert("${JSON.stringify()?js_string}" , "{}");  
+    console.assert("${JSON.stringify()?js_string}" , "null");  
     </script>
 </body>
 </html>
